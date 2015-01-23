@@ -4,12 +4,18 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>如何删除Xcode工程中的warnings警告 | tsepingkai&#39;s blog</title>
+    <title>为UILabel设置背景图 | tsepingkai&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="pingkai.tse">
     
-    <meta name="description" content="有时候我们在开发的时候，会碰到这样的场景，苹果的某个api支持版本是2.0~7.0，而假设当前的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的api，给我">
+    <meta name="description" content="当我在完成控件的时候，碰到这样一个问题。
+我需要为UILabel设置背景图。
+当然我们直接加图层来完成这个功能。
+那如果不使用2个图层来做的话，我们需要怎么做？
+解决方案
+UIImage *image = [UIImage imageNamed:@&quot;image.png&quot;];
+UIColor *col">
     
     
     
@@ -66,15 +72,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/23/remove-warnings-in-xcode-project/" title="如何删除Xcode工程中的warnings警告" itemprop="url">如何删除Xcode工程中的warnings警告</a>
+      <a href="/2015/01/23/set-image-for-uilabel/" title="为UILabel设置背景图" itemprop="url">为UILabel设置背景图</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="pingkai.tse">pingkai.tse</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-23T13:29:58.000Z" itemprop="datePublished">1月 23 2015</time>
-    更新日期:<time datetime="2015-01-23T13:29:58.000Z" itemprop="dateModified">1月 23 2015</time>
+    <time datetime="2015-01-23T15:09:34.000Z" itemprop="datePublished">1月 23 2015</time>
+    更新日期:<time datetime="2015-01-23T15:09:34.000Z" itemprop="dateModified">1月 23 2015</time>
     
   </p>
 </header>
@@ -83,26 +89,36 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案如下"><span class="toc-number">1.1.</span> <span class="toc-text">解决方案如下</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>有时候我们在开发的时候，会碰到这样的场景，苹果的某个api支持版本是2.0~7.0，而假设当前<br>的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，<br>我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的<br>api，给我们报了一个warning。看的很别捏，我们需要处理掉它。</p>
+		<p>当我在完成控件的时候，碰到这样一个问题。</p>
+<p>我需要为UILabel设置背景图。</p>
+<p>当然我们直接加图层来完成这个功能。</p>
+<p>那如果不使用2个图层来做的话，我们需要怎么做？</p>
 <h2 id="解决方案">解决方案</h2>
-<h3 id="使用_#pragma_clang_diagnostic_ignored">使用 #pragma clang diagnostic ignored</h3>
-<p>warning有多种类型，比如警告arc，mrc，或者api过时。<br>那么ignored类型也就有多种，</p>
-<p>可以通过语法来强制去除xcode的编译警告。</p>
-<p>只需要把待消除警告的语句，放置到宏定义范围中即可。</p>
-<p><strong>sample</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "tag"</span></div><div class="line">        your codes</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
+<pre><code><span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"image.png"</span>];
+<span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithPatternImage:newImage];
+labelView<span class="variable">.backgroundColor</span> = color;
+</code></pre><p>现在获取UIImage图片的实例，并转化成UIColor实例，</p>
+<p>最后通过这个UIColor实例设置到labelView的backgroundColor属性。</p>
+<p><code>这个方法设置，仅仅只是让图片平铺。无法做拉伸的效果。如果图片比较小，Laebl比较大
+就会被平铺得非常密集。</code></p>
+<h3 id="解决方案如下">解决方案如下</h3>
+<pre><code><span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"image.png"</span>];
 
-<h4 id="arc环境检测字面值">arc环境检测字面值</h4>
-<p>tag:<code>-Warc-bridge-casts-disallowed-in-nonarc</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Warc-bridge-casts-disallowed-in-nonarc"</span></div><div class="line">        CGImageSourceUpdateData(imageSource, (__bridge CFDataRef)imageData, totalSize == expectedSize);</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
+<span class="built_in">CGSize</span> imgSize = <span class="keyword">self</span><span class="variable">.frame</span><span class="variable">.size</span>; <span class="comment">// the size that you want.</span>
 
-<h4 id="接口过时字面值">接口过时字面值</h4>
-<p>tag:<code>-Wdeprecated-declarations</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Wdeprecated-declarations"</span></div><div class="line">    [mutableAttributes <span class="keyword">set</span>Object:font <span class="keyword">for</span>Key:UITextAttributeFont];</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
+UIGraphicsBeginImageContext(imgSize);
+[image drawInRect:CGRectMake(<span class="number">0</span>, <span class="number">0</span>, imgSize<span class="variable">.width</span>, imgSize<span class="variable">.height</span>)];
+<span class="built_in">UIImage</span>* newImage = UIGraphicsGetImageFromCurrentImageContext();
+UIGraphicsEndImageContext();
 
+<span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithPatternImage:newImage];
+labelView<span class="variable">.backgroundColor</span> = color;
+</code></pre><p>一样获取图片的实例，通过UIGraphicsBeginImageContext创建context，</p>
+<p>调用drawInRect重绘出新的图层，最后转换成我们需要的UIImage实例。</p>
+<p>再转换成UIColor实例，设置到label的背景色即可。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -112,7 +128,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/01/23/remove-warnings-in-xcode-project/" data-title="如何删除Xcode工程中的warnings警告 | tsepingkai&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/01/23/set-image-for-uilabel/" data-title="为UILabel设置背景图 | tsepingkai&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -121,19 +137,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/23/set-image-for-uilabel/" title="为UILabel设置背景图">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  为UILabel设置背景图</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/17/hello-world/"  title="Hello World">
+<a href="/2015/01/23/remove-warnings-in-xcode-project/"  title="如何删除Xcode工程中的warnings警告">
  <strong>NEXT:</strong><br/> 
- <span>Hello World
+ <span>如何删除Xcode工程中的warnings警告
 </span>
 </a>
 </div>
@@ -150,7 +158,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案如下"><span class="toc-number">1.1.</span> <span class="toc-text">解决方案如下</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
