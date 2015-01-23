@@ -9,7 +9,7 @@
     
     <meta name="author" content="pingkai.tse">
     
-    <meta name="description" content="有时候我们在开发的时候，会碰到这样的场景，苹果的某个Api支持版本是2.0~7.0，而假设当前的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的api，给我">
+    <meta name="description" content="有时候我们在开发的时候，会碰到这样的场景，苹果的某个api支持版本是2.0~7.0，而假设当前的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的api，给我">
     
     
     
@@ -73,8 +73,8 @@
       <a href="http://yoursite.com" title="pingkai.tse">pingkai.tse</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-23T09:59:28.000Z" itemprop="datePublished">1月 23 2015</time>
-    更新日期:<time datetime="2015-01-23T09:59:28.000Z" itemprop="dateModified">1月 23 2015</time>
+    <time datetime="2015-01-23T13:29:58.000Z" itemprop="datePublished">1月 23 2015</time>
+    更新日期:<time datetime="2015-01-23T13:29:58.000Z" itemprop="dateModified">1月 23 2015</time>
     
   </p>
 </header>
@@ -83,10 +83,10 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值_-Warc-bridge-casts-disallowed-in-nonarc"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值 -Warc-bridge-casts-disallowed-in-nonarc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值_-Wdeprecated-declarations"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值 -Wdeprecated-declarations</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<p>有时候我们在开发的时候，会碰到这样的场景，苹果的某个Api支持版本是2.0~7.0，而假设当前<br>的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，<br>我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的<br>api，给我们报了一个warning。看的很别捏，我们需要处理掉它。</p>
+		<p>有时候我们在开发的时候，会碰到这样的场景，苹果的某个api支持版本是2.0~7.0，而假设当前<br>的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，<br>我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的<br>api，给我们报了一个warning。看的很别捏，我们需要处理掉它。</p>
 <h2 id="解决方案">解决方案</h2>
 <h3 id="使用_#pragma_clang_diagnostic_ignored">使用 #pragma clang diagnostic ignored</h3>
 <p>warning有多种类型，比如警告arc，mrc，或者api过时。<br>那么ignored类型也就有多种，</p>
@@ -95,10 +95,12 @@
 <p><strong>sample</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "tag"</span></div><div class="line">        your codes</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
 
-<h4 id="arc环境检测字面值_-Warc-bridge-casts-disallowed-in-nonarc">arc环境检测字面值 -Warc-bridge-casts-disallowed-in-nonarc</h4>
+<h4 id="arc环境检测字面值">arc环境检测字面值</h4>
+<p>tag:<code>-Warc-bridge-casts-disallowed-in-nonarc</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Warc-bridge-casts-disallowed-in-nonarc"</span></div><div class="line">        CGImageSourceUpdateData(imageSource, (__bridge CFDataRef)imageData, totalSize == expectedSize);</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
 
-<h4 id="接口过时字面值_-Wdeprecated-declarations">接口过时字面值 -Wdeprecated-declarations</h4>
+<h4 id="接口过时字面值">接口过时字面值</h4>
+<p>tag:<code>-Wdeprecated-declarations</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Wdeprecated-declarations"</span></div><div class="line">    [mutableAttributes <span class="keyword">set</span>Object:font <span class="keyword">for</span>Key:UITextAttributeFont];</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
 
   
@@ -140,7 +142,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值_-Warc-bridge-casts-disallowed-in-nonarc"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值 -Warc-bridge-casts-disallowed-in-nonarc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值_-Wdeprecated-declarations"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值 -Wdeprecated-declarations</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
