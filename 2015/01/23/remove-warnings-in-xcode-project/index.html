@@ -42,9 +42,11 @@
 			<nav class="animated">
 				<ul>
 					
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">文章</a></li>
+					
+						<li><a href="/about">关于</a></li>
 					
 					<li>
 					
@@ -73,18 +75,13 @@
       <a href="http://yoursite.com" title="pingkai.tse">pingkai.tse</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-23T13:29:58.000Z" itemprop="datePublished">1月 23 2015</time>
-    更新日期:<time datetime="2015-01-23T13:29:58.000Z" itemprop="dateModified">1月 23 2015</time>
+    <time datetime="2015-01-23T07:56:29.000Z" itemprop="datePublished">1月 23 2015</time>
+    更新日期:<time datetime="2015-01-23T15:16:50.000Z" itemprop="dateModified">1月 23 2015</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_#pragma_clang_diagnostic_ignored"><span class="toc-number">1.1.</span> <span class="toc-text">使用 #pragma clang diagnostic ignored</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#arc环境检测字面值"><span class="toc-number">1.1.1.</span> <span class="toc-text">arc环境检测字面值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口过时字面值"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口过时字面值</span></a></li></ol></li></ol></li></ol>
-		</div>
 		
 		<p>有时候我们在开发的时候，会碰到这样的场景，苹果的某个api支持版本是2.0~7.0，而假设当前<br>的系统版本是8.0。那么运行在7.0或者8.0的话，我们需要使用7.0以上的解决方案，在7.0以下，<br>我们需要使用旧的api来实现，那么问题来了，我们当前的编译环境是8.0，IDE会词法分析调用的<br>api，给我们报了一个warning。看的很别捏，我们需要处理掉它。</p>
 <h2 id="解决方案">解决方案</h2>
@@ -93,17 +90,23 @@
 <p>可以通过语法来强制去除xcode的编译警告。</p>
 <p>只需要把待消除警告的语句，放置到宏定义范围中即可。</p>
 <p><strong>sample</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "tag"</span></div><div class="line">        your codes</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
-
-<h4 id="arc环境检测字面值">arc环境检测字面值</h4>
+<pre><code><span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic push</span>
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic ignored "tag"</span>
+        your codes
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic pop</span>
+</code></pre><h4 id="arc环境检测字面值">arc环境检测字面值</h4>
 <p>tag:<code>-Warc-bridge-casts-disallowed-in-nonarc</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Warc-bridge-casts-disallowed-in-nonarc"</span></div><div class="line">        CGImageSourceUpdateData(imageSource, (__bridge CFDataRef)imageData, totalSize == expectedSize);</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
-
-<h4 id="接口过时字面值">接口过时字面值</h4>
+<pre><code><span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic push</span>
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic ignored "-Warc-bridge-casts-disallowed-in-nonarc"</span>
+        CGImageSourceUpdateData(imageSource, (__bridge CFDataRef)imageData, totalSize == expectedSize);
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic pop</span>
+</code></pre><h4 id="接口过时字面值">接口过时字面值</h4>
 <p>tag:<code>-Wdeprecated-declarations</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pragma clang diagnostic push</span></div><div class="line"><span class="comment">#pragma clang diagnostic ignored "-Wdeprecated-declarations"</span></div><div class="line">    [mutableAttributes <span class="keyword">set</span>Object:font <span class="keyword">for</span>Key:UITextAttributeFont];</div><div class="line"><span class="comment">#pragma clang diagnostic pop</span></div></pre></td></tr></table></figure>
-
-  
+<pre><code><span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic push</span>
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic ignored "-Wdeprecated-declarations"</span>
+    [mutableAttributes setObject:font forKey:UITextAttributeFont];
+<span class="preprocessor">#<span class="keyword">pragma</span> clang diagnostic pop</span>
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
